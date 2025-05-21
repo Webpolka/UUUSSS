@@ -41,8 +41,10 @@ class Hack {
 		this.popup = document.querySelector(".popup");
 
 		this.endLevel = document.querySelector("#end-level");
-
 		this.endLevel.addEventListener("click", (e) => this.createCallbackWindow(e, this.createCallbackBlank()));
+
+		this.createCounter();
+		this.counter = document.querySelector(".counter");
 
 		// Бланк для подсчета ОБЯЗАТЕЛЬНЫХ ЗАДАНИЙ
 		this.checkBlank = {
@@ -79,7 +81,7 @@ class Hack {
 	getTextImage(e) {
 		e.preventDefault();
 		const posts = document.querySelector(".posts");
-		const aboutList = document.querySelector('#about-list');
+		const aboutList = document.querySelector("#about-list");
 
 		if (posts.contains(e.target) || aboutList.contains(e.target)) {
 			const postImageTrue = e.target.parentNode.classList.contains("post-image");
@@ -112,7 +114,7 @@ class Hack {
 		e.preventDefault();
 		// получаем выделенный текст
 		const posts = document.querySelector(".posts");
-		const aboutList = document.querySelector('#about-list');
+		const aboutList = document.querySelector("#about-list");
 
 		if (window.getSelection().baseNode && (posts.contains(e.target) || aboutList.contains(e.target))) {
 			let workingText = window
@@ -283,8 +285,19 @@ class Hack {
 		this.sendBtn = document.querySelector("#send");
 		this.cancelBtn = document.querySelector("#cancel");
 
-		// this.anounce(this.lastScore, 1000);
-		// console.log("222");
+		this.checkWin();
+	}
+
+	// Проверка на выиграш
+	checkWin() {
+		if (this.counter) {
+			this.counter.classList.add("show");
+			this.counter.textContent = this.showScore();
+		}
+		if (this.showScore() === 70) {
+			this.createCallbackWindow(null, this.createCallbackBlank());
+			return;
+		}
 	}
 
 	// НАХОДИМ ПОЧТУ В ТЕКСТЕ
@@ -343,7 +356,7 @@ class Hack {
 		for (const key in obj1) {
 			if (obj1.hasOwnProperty(key)) {
 				if (obj2.hasOwnProperty(key) && obj2[key]) {
-					result[key] = "<p class='tar'>" + obj1[key] + " + " + obj2[key] + "</p>";
+					result[key] = "<p class='tal dot-before'>" + obj1[key] + " + " + obj2[key] + "</p>";
 				}
 			}
 		}
@@ -360,32 +373,36 @@ class Hack {
 		const neccesary = `${this.concatAchivments(checkObj)}`;
 		const scores = `${this.concatAchivments(scoresObj)}`;
 
-		const footerSucces = `<p class="tac">…</p>
-			<p><strong>Письмо от “команды хакеров”</strong></p>
-			<p class="tac"><strong>«Хорошая работа.</strong> Ты показал(а), что умеешь собирать информацию. Жертва даже не подозревает, сколько всего мы о ней узнали. Такие, как она — легкая добыча.</p>
-			<p class="tac">⚠️ Помни: мы просто копаем то, что она сама выложила. Без взломов. Просто открытый интернет.»</p>
-			<p><strong>Подсказка для игрока (но от лица "хакеров")</strong></p>
- 			<p>Мягкий переход от игры к реальности:</p>
-			<p class="tac">📌 Заметка на будущее</p>
-			<p class="tac">«Один пост с номером телефона+ один с датой рождения = сброс пароля. А если еще и почту найдешь — дело сделано. Люди не понимают, насколько это просто.</p>
-			<p class="tac">Хорошо, что ты теперь знаешь.»</p>
-			<p><strong>Фраза-завязка на следующий уровень / переход:</strong></p>
-			<p class="tac">Следующий профиль будет посложнее. Не всё лежит на поверхности — придётся копать. Покажи, что ты умеешь не только кликать по ярким постам.</p>
-			<br><p>Кнопка: <a href="index1.html"><strong>[Перейти к следующей задаче]</strong></a></p>`;
+		const footerSucces = `<p class="tar">…</p>
+			<p class="tar"><strong>Письмо от “команды хакеров”</strong></p>
+			<p class="tar"><strong>«Хорошая работа.</strong> Ты показал(а), что умеешь собирать информацию. Жертва даже не подозревает, сколько всего мы о ней узнали. Такие, как она — легкая добыча.</p>
+			<p class="tar">⚠️ Помни: мы просто копаем то, что она сама выложила. Без взломов. Просто открытый интернет.»</p>
+			<p class="tar"><strong>Подсказка для игрока (но от лица "хакеров")</strong></p>
+ 			<p class="tar">Мягкий переход от игры к реальности:</p>
+			<p class="tar">📌 Заметка на будущее</p>
+			<p class="tar">«Один пост с номером телефона+ один с датой рождения = сброс пароля. А если еще и почту найдешь — дело сделано. Люди не понимают, насколько это просто.</p>
+			<p class="tar">Хорошо, что ты теперь знаешь.»</p>
+			<p class="tar"><strong>Фраза-завязка на следующий уровень / переход:</strong></p>
+			<p class="tar">Следующий профиль будет посложнее. Не всё лежит на поверхности — придётся копать. Покажи, что ты умеешь не только кликать по ярким постам.</p>
+			<br><p class="tar">Кнопка: <a href="index1.html"><strong>[Перейти к следующей задаче]</strong></a></p>`;
 
-		const footerMiss = `<p class="tac">…</p>
-			<p><strong>Письмо от “команды хакеров”</strong></p>
-			<p class="tac"><strong>«Плохая работа.</strong> Ты показал(а), что не умеешь собирать информацию.</p>			
-			<p>Чтобы пройти дальше набери хотя бы 30 баллов !</p>
-			<br><p>Кнопка: <a href="index2.html"><strong>[Повторить]</strong></a></p>`;
+		const footerMiss = `<p class="tar">…</p>
+			<p class="tar"><strong>Письмо от “команды хакеров”</strong></p>
+			<p class="tar"><strong>«Плохая работа.</strong> Ты показал(а), что не умеешь собирать информацию.</p>			
+			<p class="tar">Чтобы пройти дальше набери хотя бы 30 баллов !</p>
+			<br><p class="tar">Кнопка: <a href="index2.html"><strong>[Повторить]</strong></a></p>`;
 
 		html += title;
+		html += `<div class="myrow"><div class="mycolumn"></div><div class="mycolumn">`;
 		html += neccesary;
+		html += `</div></div>`;
 
 		// Выводим ДОПОЛНИТЕЛЬНЫЕ БАЛЫ, если они есть
 		if (this.hasOwnValue(this.extraBlank)) {
 			html += `<p class="tac"><strong>Дополнительно:</strong></p>`;
+			html += `<div class="myrow"><div class="mycolumn"></div><div class="mycolumn">`;
 			html += scores;
+			html += `</div></div>`;		
 		}
 
 		// Выводим предупреждение о БЕСПОЛЕЗНЫХ постах
@@ -417,21 +434,11 @@ class Hack {
 		popup.classList.add("show");
 	}
 
-	// ВЫВОД БАЛЛОВ ЗА ЗАДАНИЕ
-	anounce(content, delay) {
-		let element = document.createElement("div");
-		let body = document.querySelector("body");
-		body.append(element);
-		element.innerHTML = content;
-		element.className = "anounce";
-		element.classList.add("active");
-
-		setTimeout(() => {
-			element.classList.remove("active");
-		}, delay);
-		setTimeout(() => {
-			element.remove();
-		}, delay + 1000);
+	// СОЗДАЕМ СЧЕТЧИК БАЛОВ
+	createCounter() {
+		let html = `<div class="counter"></div>`;
+		const body = document.querySelector("body");
+		body.insertAdjacentHTML("beforeend", html);
 	}
 }
 

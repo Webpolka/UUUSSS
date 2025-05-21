@@ -30,7 +30,7 @@
 		border-radius: 50px;
 		border: 1px solid rgb(0, 0, 0, 0.25);
 	}
-	&-message{
+	&-message {
 		min-height: 150px;
 		padding: 15px;
 		width: 100%;
@@ -54,7 +54,7 @@
 
 	transition: all 0.3s ease-in-out;
 
-	&:hover{
+	&:hover {
 		background-color: #b1f795;
 	}
 }
@@ -65,29 +65,25 @@
 /* ----------------------------------------------------------------------------------------------------------------
 ВСПЛЫВАЮЩИЕ БАЛЛЫ
 ------------------------------------------------------------------------------------------------------------------*/
-.anounce {
-    position: fixed;
-    text-align: center;
-    text-transform: uppercase;
-    top: -100%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    font-size: 2rem;
-    line-height: 110%;
-    color: rgb(117, 115, 115);
-    font-weight: bold;
-    transition: all 0.5s ease-in-out;
-    text-shadow: 0 0 5px rgba(163, 166, 179, 0.95);
+.counter {
+	display: none;
+	position: fixed;
+	text-align: center;
+	top: 50px;
+	right: 50px;	
+	font-size: 2rem;
+	line-height: 110%;
+	color: rgb(66, 66, 66);
+	font-weight: bold;
+	transition: all 0.5s ease-in-out;
+	text-shadow: 0 0 5px rgba(163, 166, 179, 0.95);
 
-    @include xs {
-        font-size: 1.5rem;
-    }
-
-    &.active {
-        top: 50%;
-        opacity: 1;
-    }
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 50%;
+	&.show {
+		display: block;
+	}
 }
 
 /* ----------------------------------------------------------------------------------------------------------------
@@ -112,34 +108,32 @@
 		opacity: 1;
 		visibility: visible;
 		z-index: 1000;
-	}	
+	}
 	&_inner {
 		width: 80%;
-		max-width: 800px;
+		max-width: 1000px;
 		display: inline-block;
 		padding: 50px;
 		background-color: #fff;
 		border-radius: 50px;
 		border: 1px solid rgb(0, 0, 0, 0.25);
 	}
-	&_message{
+	&_message {
 		min-height: 150px;
 		padding: 15px;
-		width: 100%;		
+		width: 100%;
 		border-radius: 25px;
 
 		line-height: 120%;
-		font-size: 1rem;	
-		p{
+		font-size: 1rem;
+		p {
 			margin-bottom: 5px;
-		}	
-		p.tar{
-			&:before{
+		}
+		.dot-before {
+			&:before {
 				content: "·";
 				margin-right: 15px;
 			}
 		}
-		
 	}
 }
-

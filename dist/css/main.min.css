@@ -196,6 +196,21 @@ body {
   margin-left: 40px;
 }
 
+.myrow {
+  display: flex;
+  flex-direction: row;
+  margin-left: -10px;
+  margin-right: -10px;
+  height: inherit;
+}
+
+.mycolumn {
+  width: 50%;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 100%;
+}
+
 /* Подключение стилей отдельных блоков и секций */
 /* ----------------------------------------------------------------------------------------------------------------
 КНОПКИ 
@@ -981,29 +996,24 @@ body {
 /* ----------------------------------------------------------------------------------------------------------------
 ВСПЛЫВАЮЩИЕ БАЛЛЫ
 ------------------------------------------------------------------------------------------------------------------*/
-.anounce {
+.counter {
+  display: none;
   position: fixed;
   text-align: center;
-  text-transform: uppercase;
-  top: -100%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
+  top: 50px;
+  right: 50px;
   font-size: 2rem;
   line-height: 110%;
-  color: rgb(117, 115, 115);
+  color: rgb(66, 66, 66);
   font-weight: bold;
   transition: all 0.5s ease-in-out;
   text-shadow: 0 0 5px rgba(163, 166, 179, 0.95);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 50%;
 }
-@media (max-width: 320px) {
-  .anounce {
-    font-size: 1.5rem;
-  }
-}
-.anounce.active {
-  top: 50%;
-  opacity: 1;
+.counter.show {
+  display: block;
 }
 
 /* ----------------------------------------------------------------------------------------------------------------
@@ -1030,7 +1040,7 @@ body {
 }
 .popup-callback_inner {
   width: 80%;
-  max-width: 800px;
+  max-width: 1000px;
   display: inline-block;
   padding: 50px;
   background-color: #fff;
@@ -1048,7 +1058,7 @@ body {
 .popup-callback_message p {
   margin-bottom: 5px;
 }
-.popup-callback_message p.tar:before {
+.popup-callback_message .dot-before:before {
   content: "·";
   margin-right: 15px;
 }

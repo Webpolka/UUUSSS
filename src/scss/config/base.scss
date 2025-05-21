@@ -38,3 +38,17 @@ body {
 .ml-40 {
 	margin-left: 40px;
 }
+
+.myrow{
+	display: flex;
+	flex-direction: row;
+	margin-left: -10px;
+	margin-right: -10px;
+	height: inherit;
+}
+.mycolumn{
+	width: 50%;
+	padding-left: 10px;
+	padding-right: 10px;
+	height: 100%;
+}
