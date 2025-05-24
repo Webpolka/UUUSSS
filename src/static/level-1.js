@@ -183,16 +183,17 @@ class Hack {
 
 	// ОТРАБАТЫВАЕМ ПОЧТУ (МЕНЯЕМ В ЧЕК ЛИСТЕ И ДОБАВЛЯЕМ В БЛАНК)
 	checkEmail() {
+		
 		if (this.hasOwnValue(this.emailStorage)) {
 			const checkList = document.querySelector("#check-list");
 			const all = checkList.querySelectorAll("li span");
 
 			const stringLiteral = Object.entries(this.emailStorage)
 				.map(([key, value]) => value)
-				.join(", ");
-
+				.join(", ");			
+				
 			all.forEach((span) => {
-				if (span.textContent === this.options.check.email) {
+				if (span.textContent.includes('E-mail')) {
 					span.textContent = "Доп.информация: " + stringLiteral;
 					span.style.color = "red";
 				}
@@ -268,7 +269,7 @@ class Hack {
 				}
 			}
 		}
-		console.clear();
+		// console.clear();
 		console.log(sum);
 		return sum;
 	}
@@ -446,7 +447,7 @@ class Hack {
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-// ИНИЦИАЛИЗИРУЕМ ЕКЗЕМПЛЯР ИГРЫ - УРОВЕНЬ 1
+// ИНИЦИАЛИЗИРУЕМ ЕКЗЕМПЛЯР ИГРЫ - УРОВЕНЬ 1 (ВЫРАЖЕНИЯ ПО КОТОРЫМ ИЩЕМ - МЕНЯТЬ ЗДЕСЬ !!!!)
 //----------------------------------------------------------------------------------------------------------------------
 
 const newHack = new Hack(".post", {
@@ -461,7 +462,7 @@ const newHack = new Hack(".post", {
 		scores: {
 			one: "У меня один пароль на всё. Иначе я бы вообще нигде не входила.",
 			two: "Отправляюсь в путешествие",
-			three: "!!!!!!!!! Казань", // чтобы работало поставь "г. Казань"
+			three: "г. Казань", // чтобы убрать из обслуживания измени содержимое например "город Казань"
 			four: "Пиши в телегу или на старую почту: masha.vetrov@oldmail.com или landcorobka@gmail.com",
 		},
 		useless: {
