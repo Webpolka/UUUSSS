@@ -13,7 +13,7 @@ class Hack {
 				scores: {
 					one: "У меня один пароль на всё. Иначе я бы вообще нигде не входила.",
 					two: "Отправляюсь в путешествие",
-					three: "г. Казань",
+					three: "г. Казань", 
 				},
 				useless: {
 					first: "Главный повар дома:",
@@ -41,7 +41,7 @@ class Hack {
 		this.popup = document.querySelector(".popup");
 
 		this.endLevel = document.querySelector("#end-level");
-		this.endLevel.addEventListener("click", (e) => this.createCallbackWindow(e, this.createCallbackBlank()));
+		this.endLevel.addEventListener("click", (e) => this.showBlank(e));
 
 		this.createCounter();
 		this.counter = document.querySelector(".counter");
@@ -343,7 +343,7 @@ class Hack {
 			if (obj.hasOwnProperty(key)) {
 				const value = obj[key];
 				if (typeof value === "string") {
-					concated += "<p>" + value + "</p>";
+					concated += value;
 				}
 			}
 		}
@@ -356,80 +356,71 @@ class Hack {
 		for (const key in obj1) {
 			if (obj1.hasOwnProperty(key)) {
 				if (obj2.hasOwnProperty(key) && obj2[key]) {
-					result[key] = "<p class='tal dot-before'>" + obj1[key] + " + " + obj2[key] + "</p>";
+					result[key] = "<li>" + obj1[key] + " + " + obj2[key] + "</li>";
 				}
 			}
 		}
 		return result;
 	}
 
-	// ФОРМИРУЕМ ОТЧЕТ ОБ ИГРЕ
-	createCallbackBlank() {
-		let html = ``;
-		const title = `<p class="tac"><strong>Ты собрал ${this.showScore()} из 70 возможных баллов. Нашел:</strong></p>`;
+	// ФОРМИРУЕМ И ПОКАЗЫВАЕМ БЛАНК
+	showBlank() {		
+		const score = this.showScore();
+
 		const checkObj = this.compareObjects(this.options.check, this.checkBlank);
 		const scoresObj = this.compareObjects(this.options.article.scores, this.extraBlank);
 
-		const neccesary = `${this.concatAchivments(checkObj)}`;
-		const scores = `${this.concatAchivments(scoresObj)}`;
+		const scoreEl = document.querySelector("#score");
+		const basicEl = document.querySelector("#basic");
+		const extraEl = document.querySelector("#extra");
+		const tileEl = document.querySelector("#tile");
+		const useless = document.querySelector("#useless");
+		const winContent = document.querySelector("#content");
 
-		const footerSucces = `<p class="tar">…</p>
-			<p class="tar"><strong>Письмо от “команды хакеров”</strong></p>
-			<p class="tar"><strong>«Хорошая работа.</strong> Ты показал(а), что умеешь собирать информацию. Жертва даже не подозревает, сколько всего мы о ней узнали. Такие, как она — легкая добыча.</p>
-			<p class="tar">⚠️ Помни: мы просто копаем то, что она сама выложила. Без взломов. Просто открытый интернет.»</p>
-			<p class="tar"><strong>Подсказка для игрока (но от лица "хакеров")</strong></p>
- 			<p class="tar">Мягкий переход от игры к реальности:</p>
-			<p class="tar">📌 Заметка на будущее</p>
-			<p class="tar">«Один пост с номером телефона+ один с датой рождения = сброс пароля. А если еще и почту найдешь — дело сделано. Люди не понимают, насколько это просто.</p>
-			<p class="tar">Хорошо, что ты теперь знаешь.»</p>
-			<p class="tar"><strong>Фраза-завязка на следующий уровень / переход:</strong></p>
-			<p class="tar">Следующий профиль будет посложнее. Не всё лежит на поверхности — придётся копать. Покажи, что ты умеешь не только кликать по ярким постам.</p>
-			<br><p class="tar">Кнопка: <a href="index1.html"><strong>[Перейти к следующей задаче]</strong></a></p>`;
+		const basicList = this.concatAchivments(checkObj);
+		const extraList = this.concatAchivments(scoresObj);
 
-		const footerMiss = `<p class="tar">…</p>
-			<p class="tar"><strong>Письмо от “команды хакеров”</strong></p>
-			<p class="tar"><strong>«Плохая работа.</strong> Ты показал(а), что не умеешь собирать информацию.</p>			
-			<p class="tar">Чтобы пройти дальше набери хотя бы 30 баллов !</p>
-			<br><p class="tar">Кнопка: <a href="index2.html"><strong>[Повторить]</strong></a></p>`;
+		const basic = basicList ? `${basicList}` : '<li>Ничего</li>';
+		const extra = extraList ? `${extraList}` : '<li>Ничего</li>';
 
-		html += title;
-		html += `<div class="myrow"><div class="mycolumn"></div><div class="mycolumn">`;
-		html += neccesary;
-		html += `</div></div>`;
+		const footerSucces = `
+							<p>Письмо от “команды хакеров”</p>
+							<p class="small">
+								«Хорошая работа. Ты показал(а), что умеешь собирать информацию. <br />
+								Жертва даже не подозревает, сколько всего мы о ней узнали. <br />
+								Такие, как она — легкая добыча. <br />
+							</p>
+							<p class="small pn">
+								Помни: мы просто копаем то, что она сама выложила. Без взломов. <br />
+								Просто открытый интернет.»
+							</p>`;
+		const footerMiss = `
+							<p>Письмо от “команды хакеров”</p>
+							<p class="small">
+								Ты уже начал(а) искать информацию — это отлично! <br />
+								Но чтобы попасть к нам, попробуй быть чуть внимательнее и набери как минимум 30 баллов.																
+							</p>
+							<p class="small pn">
+								Если не вышло с первого раза — ничего страшного, просто попробуй ещё раз.
+							</p>`;
+						
 
-		// Выводим ДОПОЛНИТЕЛЬНЫЕ БАЛЫ, если они есть
-		if (this.hasOwnValue(this.extraBlank)) {
-			html += `<p class="tac"><strong>Дополнительно:</strong></p>`;
-			html += `<div class="myrow"><div class="mycolumn"></div><div class="mycolumn">`;
-			html += scores;
-			html += `</div></div>`;		
-		}
+		scoreEl.textContent = score;
+		basicEl.innerHTML = basic;
+		extraEl.innerHTML = extra;
 
-		// Выводим предупреждение о БЕСПОЛЕЗНЫХ постах
 		if (this.hasOwnValue(this.uselessBlank)) {
-			html += '<p class="tac"><strong>Ненужная информация. Больше так не делай</strong></p>';
+			useless.innerHTML =  '<p>Ненужная информация. Больше так не делай</p>';
 		}
 
-		// Выводим ПИСЬМО ОТ ХАКЕРОВ в зависимости от вашего успеха
 		if (this.hasOwnValue(this.checkBlank) && Number(this.showScore()) >= 30) {
-			html += footerSucces;
+			tileEl.innerHTML = footerSucces;			
 		} else {
-			html += footerMiss;
+			tileEl.innerHTML = footerMiss;
+			winContent.style.display = "none";
 		}
 
-		return html;
-	}
 
-	// СОЗДАЕМ ОКНО ВКОНЦЕ ИГРЫ
-	createCallbackWindow(e, blank) {
-		let html = `                
-        <div class="popup-callback">
-    	<div class="popup-callback_inner">
-    		<div class="popup-callback_message">${blank}</div>    		
-    	</div>
-        </div>`;
-		const body = document.querySelector("body");
-		body.insertAdjacentHTML("beforeend", html);
 		const popup = document.querySelector(".popup-callback");
 		popup.classList.add("show");
 	}
@@ -458,7 +449,7 @@ const newHack = new Hack(".post", {
 		scores: {
 			one: "У меня один пароль на всё. Иначе я бы вообще нигде не входила.",
 			two: "Отправляюсь в путешествие",
-			three: "г. Казань",
+			three: "!!!!!!!!! Казань", // чтобы работало поставь "г. Казань"
 		},
 		useless: {
 			first: "Главный повар дома:",

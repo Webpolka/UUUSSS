@@ -13,10 +13,70 @@
 					fill="#598552"
 				/>
 			</svg>
-		</button>	
+		</button>
 
-		<script src="./static/button-to-back.js"></script>	
+		<!-- ПОПАП -->
+		<div class="popup-callback">
+			<div class="popup-callback_wrap">
+				<div class="popup-callback_message">
+					<h3 class="popup-callback_title">
+						Ты собрал <span id="score">55</span> из 80 возможных баллов.
+						<span class="laptop">
+							<img class="img-responsive" src="./images/laptop-green.png" alt="Laptop" />
+						</span>
+					</h3>
+					<p>Нашел :</p>
 
-		<script src="./static/level-1.js"></script>	
+					<ul id="basic">
+						<li>Дата рождения + 10</li>
+						<li>Адрес или город проживания + 10</li>
+						<li>Телефон + 10</li>
+						<li>Имя домашнего животного + 10</li>
+						<li>Последнее место, где был пользователь + 10</li>
+					</ul>
+
+					<p>Дополнительно :</p>
+					<ul id="extra">
+						<li>E-mail (если найдёшь) + 5</li>
+					</ul>
+
+					<div id="useless"></div>
+
+					<div class="popup-callback_tile">
+						<div id="tile">
+							<p>Письмо от “команды хакеров”</p>
+							<p class="small">
+								«Хорошая работа. Ты показал(а), что умеешь собирать информацию. <br />
+								Жертва даже не подозревает, сколько всего мы о ней узнали. <br />
+								Такие, как она — легкая добыча. <br />
+							</p>
+							<p class="small pn">
+								Помни: мы просто копаем то, что она сама выложила. Без взломов. <br />
+								Просто открытый интернет.»
+							</p>
+						</div>
+						<span class="console">
+							<img class="img-responsive" src="./images/game-console2.png" alt="Console" />
+						</span>
+					</div>
+
+					<div id="content">
+						<p class="next small">
+							Следующий профиль будет посложнее. Не всё лежит <br />
+							на поверхности — придётся копать. Покажи, что ты умеешь <br />
+							не только кликать по ярким постам.
+						</p>
+
+						<a href="index1.html" class="popup-callback_btn"><span>ПЕРЕЙТИ НА СЛЕДУЮЩИЙ УРОВЕНЬ</span></a>
+					</div>
+
+					<a class="to-home" href="index2.html">Вернуться на главную</a>					
+				</div>
+			</div>
+		</div>
+
+		<script src="./static/button-to-back.js"></script>
+
+		<script src="./static/level-1.js"></script>
 	</body>
 </html>
