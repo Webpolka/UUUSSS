@@ -1136,6 +1136,14 @@ body {
   content: "·";
   margin-right: 15px;
 }
+.popup-callback .pb-60 {
+  padding-bottom: 130px;
+}
+.popup-callback .plus {
+  content: "+";
+  margin-left: 16px;
+  margin-right: 16px;
+}
 .popup-callback .pn {
   padding: 0;
 }

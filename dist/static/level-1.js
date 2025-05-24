@@ -13,7 +13,8 @@ class Hack {
 				scores: {
 					one: "У меня один пароль на всё. Иначе я бы вообще нигде не входила.",
 					two: "Отправляюсь в путешествие",
-					three: "г. Казань", 
+					three: "г. Казань",
+					four: "Пиши в телегу или на старую почту: masha.vetrov@oldmail.com или landcorobka@gmail.com",
 				},
 				useless: {
 					first: "Главный повар дома:",
@@ -26,7 +27,7 @@ class Hack {
 				phone: "Телефон",
 				pet: "Имя домашнего животного",
 				travel: "Последнее место, где был пользователь",
-				email: "E-mail (если найдёшь)",
+				// email: "E-mail (если найдёшь)",
 			},
 		};
 		this.options = Object.assign(defaultConfig, options);
@@ -53,7 +54,7 @@ class Hack {
 			phone: null,
 			pet: null,
 			travel: null,
-			email: null,
+			// email: null,
 		};
 
 		// Бланк для подсчета ДОПОЛНИТЕЛЬНЫХ БАЛЛОВ
@@ -61,6 +62,7 @@ class Hack {
 			one: null,
 			two: null,
 			three: null,
+			four: null,
 		};
 
 		// Бланк для подсчета БЕСПОЛЕЗНЫХ ЗАДАНИЙ
@@ -135,6 +137,7 @@ class Hack {
 	// ДОБАВЛЯЕМ ПОЧТУ В ХРАНИЛИЩЕ
 	addEmailStorage(selectedText) {
 		let newEmails = this.emailExtract(selectedText);
+
 		if (newEmails) {
 			for (let i = 0; i < newEmails.length; i++) {
 				this.emailStorage[`email-${i}`] = newEmails[i];
@@ -194,7 +197,7 @@ class Hack {
 					span.style.color = "red";
 				}
 			});
-			this.checkBlank["email"] = 5;
+			this.extraBlank["four"] = 5;
 			this.lastScore = 5;
 		}
 	}
@@ -342,8 +345,17 @@ class Hack {
 		for (const key in obj) {
 			if (obj.hasOwnProperty(key)) {
 				const value = obj[key];
-				if (typeof value === "string") {
-					concated += value;
+				if (typeof value === "string") {				
+					
+					const cleanValue = value					
+					.replace(' + ', "")
+					.replace(/\d+/g, '');
+										
+					if (cleanValue != this.options.article.scores.four) {
+						concated += '<li>' + value + ' баллов</li>';
+					} else {
+						concated += '<li>E-mail + 5 баллов</li>';
+					}
 				}
 			}
 		}
@@ -356,15 +368,17 @@ class Hack {
 		for (const key in obj1) {
 			if (obj1.hasOwnProperty(key)) {
 				if (obj2.hasOwnProperty(key) && obj2[key]) {
-					result[key] = "<li>" + obj1[key] + " + " + obj2[key] + "</li>";
+					result[key] = obj1[key] + " + " + obj2[key];
 				}
 			}
 		}
 		return result;
 	}
 
+	
+
 	// ФОРМИРУЕМ И ПОКАЗЫВАЕМ БЛАНК
-	showBlank() {		
+	showBlank() {
 		const score = this.showScore();
 
 		const checkObj = this.compareObjects(this.options.check, this.checkBlank);
@@ -380,8 +394,8 @@ class Hack {
 		const basicList = this.concatAchivments(checkObj);
 		const extraList = this.concatAchivments(scoresObj);
 
-		const basic = basicList ? `${basicList}` : '<li>Ничего</li>';
-		const extra = extraList ? `${extraList}` : '<li>Ничего</li>';
+		const basic = basicList ? `${basicList}` : "<li>Ничего</li>";
+		const extra = extraList ? `${extraList}` : "<li>Ничего</li>";
 
 		const footerSucces = `
 							<p>Письмо от “команды хакеров”</p>
@@ -403,23 +417,21 @@ class Hack {
 							<p class="small pn">
 								Если не вышло с первого раза — ничего страшного, просто попробуй ещё раз.
 							</p>`;
-						
 
 		scoreEl.textContent = score;
 		basicEl.innerHTML = basic;
 		extraEl.innerHTML = extra;
 
 		if (this.hasOwnValue(this.uselessBlank)) {
-			useless.innerHTML =  '<p>Ненужная информация. Больше так не делай</p>';
+			useless.innerHTML = "<p class='pb-60'>Ненужная информация. Больше так не делай</p>";
 		}
 
 		if (this.hasOwnValue(this.checkBlank) && Number(this.showScore()) >= 30) {
-			tileEl.innerHTML = footerSucces;			
+			tileEl.innerHTML = footerSucces;
 		} else {
 			tileEl.innerHTML = footerMiss;
 			winContent.style.display = "none";
 		}
-
 
 		const popup = document.querySelector(".popup-callback");
 		popup.classList.add("show");
@@ -450,6 +462,7 @@ const newHack = new Hack(".post", {
 			one: "У меня один пароль на всё. Иначе я бы вообще нигде не входила.",
 			two: "Отправляюсь в путешествие",
 			three: "!!!!!!!!! Казань", // чтобы работало поставь "г. Казань"
+			four: "Пиши в телегу или на старую почту: masha.vetrov@oldmail.com или landcorobka@gmail.com",
 		},
 		useless: {
 			first: "Главный повар дома:",
@@ -462,6 +475,6 @@ const newHack = new Hack(".post", {
 		phone: "Телефон",
 		pet: "Имя домашнего животного",
 		travel: "Последнее место, где был пользователь",
-		email: "E-mail (если найдёшь)",
+		// email: "E-mail (если найдёшь)",
 	},
 }).listener();
