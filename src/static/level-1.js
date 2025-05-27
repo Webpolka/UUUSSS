@@ -183,17 +183,16 @@ class Hack {
 
 	// ОТРАБАТЫВАЕМ ПОЧТУ (МЕНЯЕМ В ЧЕК ЛИСТЕ И ДОБАВЛЯЕМ В БЛАНК)
 	checkEmail() {
-		
 		if (this.hasOwnValue(this.emailStorage)) {
 			const checkList = document.querySelector("#check-list");
 			const all = checkList.querySelectorAll("li span");
 
 			const stringLiteral = Object.entries(this.emailStorage)
 				.map(([key, value]) => value)
-				.join(", ");			
-				
+				.join(", ");
+
 			all.forEach((span) => {
-				if (span.textContent.includes('E-mail')) {
+				if (span.textContent.includes("E-mail")) {
 					span.textContent = "Доп.информация: " + stringLiteral;
 					span.style.color = "red";
 				}
@@ -346,16 +345,13 @@ class Hack {
 		for (const key in obj) {
 			if (obj.hasOwnProperty(key)) {
 				const value = obj[key];
-				if (typeof value === "string") {				
-					
-					const cleanValue = value					
-					.replace(' + ', "")
-					.replace(/\d+/g, '');
-										
+				if (typeof value === "string") {
+					const cleanValue = value.replace(" + ", "").replace(/\d+/g, "");
+
 					if (cleanValue != this.options.article.scores.four) {
-						concated += '<li>' + value + ' баллов</li>';
+						concated += "<li>" + value + " баллов</li>";
 					} else {
-						concated += '<li>E-mail + 5 баллов</li>';
+						concated += "<li>E-mail + 5 баллов</li>";
 					}
 				}
 			}
@@ -376,8 +372,6 @@ class Hack {
 		return result;
 	}
 
-	
-
 	// ФОРМИРУЕМ И ПОКАЗЫВАЕМ БЛАНК
 	showBlank() {
 		const score = this.showScore();
@@ -390,7 +384,10 @@ class Hack {
 		const extraEl = document.querySelector("#extra");
 		const tileEl = document.querySelector("#tile");
 		const useless = document.querySelector("#useless");
-		const winContent = document.querySelector("#content");
+
+		// ВОТ ДОБАВИЛ ДВЕ КОНСТАНТЫ
+		const winContentSucces = document.querySelector("#content-succes");
+		const winContentFail = document.querySelector("#content-fail");
 
 		const basicList = this.concatAchivments(checkObj);
 		const extraList = this.concatAchivments(scoresObj);
@@ -427,11 +424,16 @@ class Hack {
 			useless.innerHTML = "<p class='pb-60'>Ненужная информация. Больше так не делай</p>";
 		}
 
-		if (this.hasOwnValue(this.checkBlank) && Number(this.showScore()) >= 30) {
-			tileEl.innerHTML = footerSucces;
-		} else {
-			tileEl.innerHTML = footerMiss;
-			winContent.style.display = "none";
+		if (tileEl && winContentSucces && winContentFail)
+			if (this.hasOwnValue(this.checkBlank) && Number(this.showScore()) >= 30) {
+				tileEl.innerHTML = footerSucces;
+				winContentSucces.style.display = "block";
+			} else {
+				tileEl.innerHTML = footerMiss;
+				winContentFail.style.display = "block";
+			}
+		else {
+			console.log('У ВАС ПРОБЛЕМЫ С РАМЕТКОЙ ! НЕТ id="content-fail" ИЛИ id="content-succes" ИЛИ id="tile" !');
 		}
 
 		const popup = document.querySelector(".popup-callback");
